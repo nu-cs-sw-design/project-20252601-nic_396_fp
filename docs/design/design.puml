@@ -3,6 +3,7 @@ package domain {
     +class Deck {
         -deck: ArrayList<Card>
 
+        +Deck()
         +shuffle(): void
         +draw(): Card
     }
@@ -11,6 +12,7 @@ package domain {
         -{final} value: CardValue
         -{final} suit: CardSuit
 
+        +Card(value: Value, suit: Suit)
         +getValue(): CardValue
         +getSuit(): CardSuit
     }
@@ -29,6 +31,39 @@ package domain {
         KING,
         ACE
     }
+
+    +class Game {
+        -tOne: Team
+        -tTwo: Team
+        -deck: Deck
+
+        +game(pOne: Player, pTwo: Player, pThree: Player, pFour: Player)
+        +deal(): void
+        +checkWin(): Team
+        +updateScore(): void
+    }
+
+    +class Team {
+        -pOne: Player
+        -pTwo: Player
+
+        +Team(pOne: Player, pTwo: Player)
+        +calledTrump(): boolean
+        +tricksWon(): int
+
+    }
+
+    +class Player {
+        -name: String
+        -tricksWon: int
+        -calledTrump: boolean
+
+        +Player(name: String)
+        +addTrick(): void
+        +resetTricks(): void
+        +setCalledTrump(): void
+
+    }
 }
 package interface {
 
@@ -37,6 +72,9 @@ package interface {
 Deck --> "*" Card
 Card --> CardSuit
 Card --> CardValue
+Game --> "*" Team
+Game --> Deck
+Team --> "*" Player
 
 
 @enduml

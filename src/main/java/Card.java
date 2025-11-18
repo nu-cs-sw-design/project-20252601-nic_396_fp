@@ -1,6 +1,6 @@
 public class Card {
-    private CardValue value;
-    private CardSuit suit;
+    private final CardValue value;
+    private final CardSuit suit;
 
     public Card(CardValue value, CardSuit suit) {
         this.value = value;

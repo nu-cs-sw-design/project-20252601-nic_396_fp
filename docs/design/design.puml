@@ -1,2 +1,43 @@
 @startuml
+package domain {
+    +class Deck {
+        -deck: ArrayList<Card>
+
+        +shuffle(): void
+        +draw(): Card
+    }
+
+    +class Card {
+        -value: CardValue
+        -suit: CardSuit
+
+        +getValue(): CardValue
+        +getSuit(): CardSuit
+    }
+
+    +enum CardSuit {
+        HEART,
+        SPADE,
+        CLUB,
+        DIAMOND
+    }
+    +enum CardValue {
+        NINE,
+        TEN,
+        JACK,
+        QUEEN,
+        KING,
+        ACE
+    }
+}
+package interface {
+
+}
+
+Deck --> "*" Card
+Card --> CardSuit
+Card --> CardValue
+
+
 @enduml
+--> for association, ..> for dependency, ..|> for implementation, and --|> for inheritance.

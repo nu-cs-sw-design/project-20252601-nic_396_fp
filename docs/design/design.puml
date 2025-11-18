@@ -8,8 +8,8 @@ package domain {
     }
 
     +class Card {
-        -value: CardValue
-        -suit: CardSuit
+        -{final} value: CardValue
+        -{final} suit: CardSuit
 
         +getValue(): CardValue
         +getSuit(): CardSuit
@@ -17,9 +17,9 @@ package domain {
 
     +enum CardSuit {
         HEART,
-        SPADE,
+        DIAMOND,
         CLUB,
-        DIAMOND
+        SPADE
     }
     +enum CardValue {
         NINE,

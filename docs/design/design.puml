@@ -61,7 +61,9 @@ package domain {
         +Player(name: String)
         +addTrick(): void
         +resetTricks(): void
-        +setCalledTrump(): void
+        +setCalledTrump(calledTrump: boolean): void
+        +getCalledTrump(): boolean
+        +getTricksWon(): int
 
     }
 }

@@ -1,5 +1,5 @@
 public class Player {
-    private String name;
+    private final String name;
     private int tricksWon;
     private boolean calledTrump;
 
@@ -27,6 +27,10 @@ public class Player {
 
     public boolean getCalledTrump() {
         return calledTrump;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

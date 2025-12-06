@@ -2,10 +2,12 @@ public class Player {
     private final String name;
     private int tricksWon;
     private boolean calledTrump;
+    private final Hand hand;
 
     public Player(String name) {
         this.name = name;
         this.tricksWon = 0;
+        this.hand = new Hand();
         this.calledTrump = false;
     }
 
@@ -32,5 +34,7 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public Hand getHand() { return hand; }
 
 }

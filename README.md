@@ -1,12 +1,10 @@
-# Project: NAME
+# Project: EUCHRE
 
 ## Contributors
-NAME, NAME, NAME
+NICOLAS LOFGREN
 
 ## Dependencies
-- LANGUAGE AND VERSION
-- EXTERNAL LIBRARIES
-- ETC
+- Java 11
 
 ## Build Instructions
-HOW TO BUILD YOUR PROJECT.
+Build the project then run Main

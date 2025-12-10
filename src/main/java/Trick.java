@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Trick {
     private final List<CardPlay> plays;
     private final CardSuit ledSuit;
@@ -51,7 +54,7 @@ public class Trick {
     }
 
     public boolean isComplete() {
-        return plays.size() == 4;
+        return plays.size() >= 3;
     }
 
 

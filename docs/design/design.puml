@@ -7,6 +7,62 @@ package domain {
         +shuffle(): void
         +draw(): Card
     }
+    +class Hand {
+        -{final} cards: List<Card>
+        +Hand()
+        +addCard(card: Card): void
+        +playCard(index: int): Card
+        +removeCard(card: Card): Card
+        +getCard(index: int): Card
+        +size(): int
+        +clear(): void
+        +getCards(): ArrayList<Card>
+        +hasSuit(suit: CardSuit, trump: CardSuit): boolean
+        +canPlayCard(card: Card, ledSuit: CardSuit, trump: CardSuit): boolean
+        +toString(): String
+
+    }
+
+    +class Trump {
+        -{final} suit: CardSuit
+        -{final} caller: Player
+        -{final} goingAlone: boolean
+
+        +Trump(suit: CardSuit, caller: Player, goingAlone: boolean)
+        +getSuit(): CardSuit
+        +getCaller(): Player
+        +isGoingAlone(): boolean
+        +isTrump(card: Card): boolean
+        +isRightBower(card: Card): boolean
+        +isLeftBower(card: Card): boolean
+        +getEffectiveSuit(card: Card): CardSuit
+        +compareCards(card1: Card, card2: Card, ledSuit: CardSuit): int
+        +toString(): String
+    }
+
+    +class Trick {
+        -plays: List<CardPlay>
+        -{final} trump: Trump
+
+        +Trick(trump: Trump)
+        +addPlay(card: Card, player: Player): void
+        +getLedSuit(): CardSuit
+        +isComplete(): boolean
+        +getWinner(): Player
+        +getPlays(): List<CardPlay>
+        +size(): int
+        +isLegalPlay(card: Card, hand: Hand): boolean
+        +toString(): String
+    }
+
+    +class CardPlay {
+        -{final} card: Card
+        -{final} player: Player
+
+        +CardPlay(card: Card, player: Player)
+        +getCard(): Card
+        +getPlayer(): Player
+    }
 
     +class Card {
         -{final} value: CardValue
@@ -32,16 +88,6 @@ package domain {
         ACE
     }
 
-    +class Game {
-        -tOne: Team
-        -tTwo: Team
-        -deck: Deck
-
-        +game(pOne: Player, pTwo: Player, pThree: Player, pFour: Player)
-        +deal(): void
-        +checkWin(): Team
-        +updateScore(): void
-    }
 
     +class Team {
         -pOne: Player
@@ -50,13 +96,45 @@ package domain {
         +Team(pOne: Player, pTwo: Player)
         +calledTrump(): boolean
         +tricksWon(): int
+        getPOne(): Player
+        getPTwo(): Player
 
     }
+   +class Game {
+        -{final} teamOne: Team
+        -{final} teamTwo: Team
+        -{final} players: List<Player>
+        -{final} deck: Deck
+        -teamOneScore: int
+        -teamTwoScore: int
+        -dealerIndex: int
+        -currentTrump: Trump
+        -{static final} WINNING_SCORE: int
 
+        +Game(pOne: Player, pTwo: Player, pThree: Player, pFour: Player)
+        +startNewRound(): void
+        +deal(): void
+        +drawTurnUpCard(): Card
+        +setTrump(suit: CardSuit, caller: Player, goingAlone: boolean): void
+        +playTrick(startPlayerIndex: int): Player
+        +updateScore(): void
+        +nextDealer(): void
+        +isGameOver(): boolean
+        +getTeamOne(): Team
+        +getTeamTwo(): Team
+        +getPlayers(): List<Player>
+        +getTeamOneScore(): int
+        +getTeamTwoScore(): int
+        +getDealerIndex(): int
+        +getDealer(): Player
+        +getCurrentTrump(): Trump
+        +checkWin(): Team
+    }
     +class Player {
         -name: String
         -tricksWon: int
         -calledTrump: boolean
+        -hand: Hand
 
         +Player(name: String)
         +addTrick(): void
@@ -64,11 +142,35 @@ package domain {
         +setCalledTrump(calledTrump: boolean): void
         +getCalledTrump(): boolean
         +getTricksWon(): int
+        +getName(): String
+        +getHand(): Hand
 
     }
 }
 package interface {
+    +class CommandLineUI {
+        -{final} scanner: Scanner
+        -{final} game: Game
 
+        +CommandLineUI(game: Game)
+        +play(): void
+        -playRound(): void
+        -conductBidding(): Trump
+        -playTrick(startPlayerIndex: int, trump: Trump): Player
+        -promptOrderUp(player: Player, turnUpCard: Card, isDealer: boolean): boolean
+        -promptCallTrump(player: Player, turnDownSuit: CardSuit): CardSuit
+        -promptGoAlone(player: Player): boolean
+        -promptDiscardCard(player: Player): Card
+        -promptPlayCard(player: Player, trick: Trick): Card
+        -displayPlayerHand(player: Player): void
+        -displayTrickState(trick: Trick, trump: Trump): void
+        -displayScore(): void
+        -displayRoundSummary(): void
+        -announceWinner(): void
+        -formatCard(card: Card): String
+        -waitForEnter(): void
+        -isPartner(p1: Player, p2: Player): boolean
+    }
 }
 
 Deck --> "*" Card
@@ -77,7 +179,20 @@ Card --> CardValue
 Game --> "*" Team
 Game --> Deck
 Team --> "*" Player
-
+Player --> Hand
+Hand --> "*" Card
+Trump --> CardSuit
+Trump --> Player
+Trick --> Trump
+Trick --> "*" CardPlay
+CardPlay --> Card
+CardPlay --> Player
+Game --> Trump
+CommandLineUI --> Game
+CommandLineUI ..> Trump
+CommandLineUI ..> Trick
+CommandLineUI ..> Card
+CommandLineUI ..> Player
 
 @enduml
 --> for association, ..> for dependency, ..|> for implementation, and --|> for inheritance.

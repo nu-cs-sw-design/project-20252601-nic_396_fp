@@ -1,1 +1,1 @@
-Document assumptions in this file, if any,
+Assumes standard Deck composition, winning score
